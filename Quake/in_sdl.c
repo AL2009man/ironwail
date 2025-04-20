@@ -1731,6 +1731,7 @@ void IN_SendKeyEvents (void)
 			{
 				float prev_yaw = gyro_yaw;
 				float prev_pitch = gyro_pitch;
+				float prev_roll = gyro_roll;
 
 				if (IN_UpdateGyroCalibration (event.csensor.data))
 					break;
@@ -1792,6 +1793,7 @@ void IN_SendKeyEvents (void)
 
 				// Apply filtering to smooth gyro movements
 				gyro_yaw = IN_FilterGyroSample (prev_yaw, gyro_yaw);
+				gyro_roll = IN_FilterGyroSample (prev_roll, gyro_roll);
 				gyro_pitch = IN_FilterGyroSample (prev_pitch, gyro_pitch);
 			}
 			break;
