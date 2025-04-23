@@ -1747,8 +1747,10 @@ void IN_SendKeyEvents (void)
 				case 2: // Local Space
 				{
 					Vector3 localGyro = TransformToLocalSpace (
-						event.csensor.data[1], event.csensor.data[0], event.csensor.data[2],
-						1.0f, 1.0f, 1.0f, 0.5f
+						event.csensor.data[1] - gyro_calibration_y.value,
+						event.csensor.data[0] - gyro_calibration_x.value,
+						event.csensor.data[2] - gyro_calibration_z.value,
+						1.0f, 1.0f, 1.0f, 0.0f
 					);
 					gyro_yaw = localGyro.x;
 					gyro_pitch = localGyro.y;
@@ -1758,7 +1760,9 @@ void IN_SendKeyEvents (void)
 				case 3: // Player Space
 				{
 					Vector3 playerGyro = TransformToPlayerSpace (
-						event.csensor.data[1], event.csensor.data[0], event.csensor.data[2],
+						event.csensor.data[1] - gyro_calibration_y.value,
+						event.csensor.data[0] - gyro_calibration_x.value,
+						event.csensor.data[2] - gyro_calibration_z.value,
 						GetGravityVector (),
 						1.0f, 1.0f, 1.0f
 					);
@@ -1770,7 +1774,9 @@ void IN_SendKeyEvents (void)
 				case 4: // World Space
 				{
 					Vector3 worldGyro = TransformToWorldSpace (
-						event.csensor.data[1], event.csensor.data[0], event.csensor.data[2],
+						event.csensor.data[1] - gyro_calibration_y.value,
+						event.csensor.data[0] - gyro_calibration_x.value,
+						event.csensor.data[2] - gyro_calibration_z.value,
 						GetGravityVector (),
 						1.0f, 1.0f, 1.0f
 					);
@@ -1779,6 +1785,7 @@ void IN_SendKeyEvents (void)
 					gyro_roll = -worldGyro.z;
 				}
 				break;
+
 				default:
 					gyro_yaw = 0.f;
 					gyro_pitch = 0.f;
